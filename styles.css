@@ -240,6 +240,13 @@ h3 {
   }
 
   .fav-container {
-    width: calc(280px - 4vw); 
+    margin-left: 8vw; 
+    top: 9rem;
+  }
+}
+
+@media only screen and (max-width: 420px) {
+  .pokemon-list {
+    width: 300px;
   }
 }
