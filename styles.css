@@ -86,6 +86,26 @@ h3 {
   gap: 1rem;
 }
 
+.filter button {
+  background-color: rgba(98, 192, 255, 0.753);
+  border: 1px solid rgba(0, 153, 255, 0.753);
+  padding: 2px 0.5rem;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.favorites-nav button {
+  background-color: #f8e9e9;
+}
+
+.a-to-z {
+  margin-left: 2vw;
+}
+
+.z-to-a {
+  margin-right: 2vw;
+}
 .pop-stat {
   margin-left: 2rem;
   text-align: center;

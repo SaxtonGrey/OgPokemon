@@ -13,10 +13,14 @@ const fetchData = async () => {
 const pokemonList = document.querySelector('.pokemon-list');
 const favoritesList = document.querySelector('.favorites-list');
 const searchInput = document.querySelector('.search-input');
-const filterPageItems = document.querySelectorAll('.filter-page li a');
+const filterPageItems = document.querySelectorAll('.filter-page li button');
 const aToZ = document.querySelector('.a-to-z');
 const zToA = document.querySelector('.z-to-a');
 const limit = localStorage.setItem('filterLimit', 151);
+const favTab = document.querySelector(".favs-tab");
+const favWrapper = document.querySelector('.fav-wrapper');
+const favNav = document.querySelector('.favorites-nav');
+const open = "open";
 
 const checkFavorites = () => {
   const favoritesHeader = document.querySelector('.sub-header');
@@ -163,12 +167,17 @@ const displayPokemon = async (limit, sortBy = '') => {
     } 
   });
 
-  pokeLimit.forEach((object) => {
-    if (localStorage.getItem('favorite-nums')?.split(',').includes(object.number.toString())) {
+  let count = 0;
+
+  pokemonObjects.forEach((object) => {
+    if (count >= limit) {
+      return; // stop the loop when the limit is reached
+    } else if (localStorage.getItem('favorite-nums')?.split(',').includes(object.number.toString())) {
       return;
-    } else { 
+    } else {
       const pokemonCard = createPokemonCard(object);
       pokemonList.appendChild(pokemonCard);
+      count++; // increment the counter after adding a card
     }
   });
   
@@ -240,11 +249,6 @@ zToA.addEventListener('click', () => {
   favoritesList.innerHTML = '';
   displayPokemon(limit, 'desc');
 });
-
-const favTab = document.querySelector(".favs-tab");
-const favWrapper = document.querySelector('.fav-wrapper');
-const favNav = document.querySelector('.favorites-nav');
-const open = "open";
 
 function toggleOpen(element) {
   element.classList.toggle(open);
