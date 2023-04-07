@@ -188,7 +188,6 @@ h3 {
   position: fixed;
   top: 5rem;
   right: 0;
-  height: 100%;
   background: #f8e9e9;
   padding: 1rem;
   z-index: 100;
@@ -212,7 +211,7 @@ h3 {
 }
 
 .fav-wrapper {
-  max-height: 90%;
+  max-height: 70vh;
   overflow-y: scroll;
 }
 
@@ -246,6 +245,18 @@ h3 {
 }
 
 @media only screen and (max-width: 420px) {
+  header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1;
+  }
+
+  main {
+    margin-top: 130px;
+  }
+
   .pokemon-list {
     width: 300px;
   }
