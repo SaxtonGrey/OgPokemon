@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>First 151 Pokemon</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header>
+      <h1>The Originals</h1>
+      <div class="search-box">
+        <input class="search-input" on type="text" placeholder="Search by name">
+        <button class="search-button" onclick="searchPokemon()">Search</button>
+      </div>
+    </header>
+    <main>
+      <div class="container">
+        <div class="nav">
+          <div class="filter">
+            <div>Items Displayed:</div>
+            <ul class="filter-page">
+              <li><a href="#">10</a></li>
+              <li><a href="#">50</a></li>
+              <li><a href="#">100</a></li>
+              <li><a href="#">151</a></li>
+            </ul>
+            <div class="favorites-nav">
+              <a href="#">Favorites</a>
+            </div>
+            <div class="a-to-z">
+              <a href="#">A-Z</a>
+            </div>
+            <div class="z-to-a">
+              <a href="#">Z-A</a>
+            </div>
+            <div class="pop-stat"></div>
+          </div>
+        </div>
+        <section class="pokemon-list"></section>
+      </div>
+
+      <!-- Favorites Modal -->
+      <div class="fav-container">
+        <div class="fav-wrapper">
+          <div class="sub-header">Favorite PokeMon</div>
+          <section class="favorites-list"></section>
+          <button id="favs-tab" class="favs-tab">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+        </div>
+      </div>
+    </main>
+    <script src="index.js"></script>
+  </body>
+</html>
+
+
