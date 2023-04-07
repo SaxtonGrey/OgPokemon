@@ -12,6 +12,10 @@ const fetchData = async () => {
 
 const pokemonList = document.querySelector('.pokemon-list');
 const favoritesList = document.querySelector('.favorites-list');
+const searchInput = document.querySelector('.search-input');
+const filterPageItems = document.querySelectorAll('.filter-page li a');
+const aToZ = document.querySelector('.a-to-z');
+const zToA = document.querySelector('.z-to-a');
 
 const checkFavorites = () => {
   const favoritesHeader = document.querySelector('.sub-header');
@@ -124,8 +128,6 @@ const displayPokemon = async (limit, sortBy = '') => {
     pokemons.map((pokemon) => fetch(pokemon.url).then((res) => res.json()))
   );
 
-  let pokeLimit = pokemonData.slice(0, limit);
-
   // Create Pokemon objects from fetched data
   const pokemonObjects = pokemonData.map((data) => ({
     name: data.name,
@@ -135,8 +137,21 @@ const displayPokemon = async (limit, sortBy = '') => {
     abilities: data.abilities.map((ability) => ability.ability.name).join(', '),
   }));
 
-  // Add favorite Pokemon objects to favorites list
+  // Sort the Pokemon objects based on the sortBy parameter
+  if (sortBy === 'asc') {
+    pokemonObjects.sort((a, b) => a.name.localeCompare(b.name));
+    // limitedPokemonObjects.sort((a, b) => a.name.localeCompare(b.name));
+  } else if (sortBy === 'desc') {
+    pokemonObjects.sort((a, b) => b.name.localeCompare(a.name));
+    // limitedPokemonObjects.sort((a, b) => b.name.localeCompare(a.name));
+  } else {
+    pokemonObjects.sort((a, b) => a.number - b.number);
+    // LimitedPokemonObjects.sort((a, b) => a.number - b.number);
+  }
 
+  let pokeLimit = pokemonObjects.slice(0, limit);
+
+  // Add favorite Pokemon objects to favorites list
   pokemonObjects.forEach((object) => {
     if (localStorage.getItem('favorite-nums')?.split(',').includes(object.number.toString())) {
       if (![...favoritesList.children].some(card => card.dataset.number === object.number.toString())) {
@@ -148,24 +163,7 @@ const displayPokemon = async (limit, sortBy = '') => {
     } 
   });
 
-  const limitedPokemonObjects = pokeLimit.map((data) => ({
-    name: data.name,
-    image: data.sprites.other['official-artwork'].front_default,
-    number: data.id,
-    type: data.types.map((type) => type.type.name).join(', '),
-    abilities: data.abilities.map((ability) => ability.ability.name).join(', '),
-  }));
-
-  // Sort the Pokemon objects based on the sortBy parameter
-  if (sortBy === 'asc') {
-    pokemonObjects.sort((a, b) => a.name.localeCompare(b.name));
-  } else if (sortBy === 'desc') {
-    pokemonObjects.sort((a, b) => b.name.localeCompare(a.name));
-  } else {
-    pokemonObjects.sort((a, b) => a.number - b.number);
-  }
-
-  limitedPokemonObjects.forEach((object) => {
+  pokeLimit.forEach((object) => {
     if (localStorage.getItem('favorite-nums')?.split(',').includes(object.number.toString())) {
       return;
     } else { 
@@ -178,8 +176,6 @@ const displayPokemon = async (limit, sortBy = '') => {
     countTypes();
   }, 500);
 };
-
-const searchInput = document.querySelector('.search-input');
 
 // search for a Pokemon by name
 const searchPokemon = async () => {
@@ -218,8 +214,6 @@ searchInput.addEventListener('keypress', (event) => {
   }
 });
 
-const filterPageItems = document.querySelectorAll('.filter-page li a');
-
 filterPageItems.forEach(item => {
   item.addEventListener('click', () => {
     const filterLimit = item.textContent*1; 
@@ -233,9 +227,6 @@ filterPageItems.forEach(item => {
 });
 
 // ALphabetical Sorting
-const aToZ = document.querySelector('.a-to-z');
-const zToA = document.querySelector('.z-to-a');
-
 aToZ.addEventListener('click', () => {
   pokemonList.innerHTML = '';
   favoritesList.innerHTML = '';

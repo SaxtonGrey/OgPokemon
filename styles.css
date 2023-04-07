@@ -42,11 +42,24 @@ h3 {
   text-transform: uppercase;
 }
 
+.bg-wrapper {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  background: url(./assets/poke-bg.png);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
 .container {
-  max-width: 1440px;
+  max-width: 100vw;
   width: 100%;
+  height: 100vh;
   margin: 0 auto;
   position: relative;
+  overflow-y: scroll;
+  padding-bottom: 10rem;
 }
 
 .nav {
@@ -63,6 +76,8 @@ h3 {
   padding: 1rem;
   flex-wrap: wrap;
   justify-content: center;
+  margin: 1rem auto;
+  background-color: #fff;
 }
 
 .filter-page {
@@ -73,10 +88,11 @@ h3 {
 
 .pop-stat {
   margin-left: 2rem;
+  text-align: center;
 }
 
 .favorites-nav {
-  margin-left: 3rem;
+  margin-left: 1rem;
 }
 
 .search-box {
@@ -112,10 +128,11 @@ h3 {
   flex-wrap: wrap;
   justify-content: center;
   margin: 0 auto;
+  background: transparent;
 }
 
 .pokemon-card {
-  background-color: rgba(98, 192, 255, 0.445);
+  background-color: rgba(98, 192, 255, 0.753);
   padding: 1rem;
   margin-bottom: 1rem;
   border-radius: 4px;
@@ -213,12 +230,16 @@ h3 {
     display: block;
   }
 
-  section {
-    flex-basis: 100%;
-    margin-bottom: 1rem;
+  header {
+    flex-direction: column;
+  }
+
+  header .search-box {
+    margin-left: 0;
+    margin-top: 10px;
   }
 
   .fav-container {
-    max-width: 8vw;
+    width: calc(280px - 4vw); 
   }
 }
