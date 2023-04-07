@@ -16,6 +16,7 @@ const searchInput = document.querySelector('.search-input');
 const filterPageItems = document.querySelectorAll('.filter-page li a');
 const aToZ = document.querySelector('.a-to-z');
 const zToA = document.querySelector('.z-to-a');
+const limit = localStorage.setItem('filterLimit', 151);
 
 const checkFavorites = () => {
   const favoritesHeader = document.querySelector('.sub-header');
@@ -137,20 +138,19 @@ const displayPokemon = async (limit, sortBy = '') => {
     abilities: data.abilities.map((ability) => ability.ability.name).join(', '),
   }));
 
+  let pokeLimit = pokemonObjects.slice(0, limit);
+  
   // Sort the Pokemon objects based on the sortBy parameter
+  pokemonObjects.sort((a, b) => a.number - b.number);
+
   if (sortBy === 'asc') {
     pokemonObjects.sort((a, b) => a.name.localeCompare(b.name));
-    // limitedPokemonObjects.sort((a, b) => a.name.localeCompare(b.name));
+    pokeLimit.sort((a, b) => a.name.localeCompare(b.name));
   } else if (sortBy === 'desc') {
     pokemonObjects.sort((a, b) => b.name.localeCompare(a.name));
-    // limitedPokemonObjects.sort((a, b) => b.name.localeCompare(a.name));
-  } else {
-    pokemonObjects.sort((a, b) => a.number - b.number);
-    // LimitedPokemonObjects.sort((a, b) => a.number - b.number);
-  }
-
-  let pokeLimit = pokemonObjects.slice(0, limit);
-
+    pokeLimit.sort((a, b) => b.name.localeCompare(a.name));
+  } 
+  
   // Add favorite Pokemon objects to favorites list
   pokemonObjects.forEach((object) => {
     if (localStorage.getItem('favorite-nums')?.split(',').includes(object.number.toString())) {
@@ -228,16 +228,16 @@ filterPageItems.forEach(item => {
 
 // ALphabetical Sorting
 aToZ.addEventListener('click', () => {
+  const limit = localStorage.getItem('filterLimit');
   pokemonList.innerHTML = '';
   favoritesList.innerHTML = '';
-  const limit = localStorage.getItem('filterLimit');
   displayPokemon(limit, 'asc');
 });
 
 zToA.addEventListener('click', () => {
+  const limit = localStorage.getItem('filterLimit');
   pokemonList.innerHTML = '';
   favoritesList.innerHTML = '';
-  const limit = localStorage.getItem('filterLimit');
   displayPokemon(limit, 'desc');
 });
 
