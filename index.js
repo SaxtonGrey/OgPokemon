@@ -16,15 +16,11 @@ const searchInput = document.querySelector('.search-input');
 const filterPageItems = document.querySelectorAll('.filter-page li button');
 const aToZ = document.querySelector('.a-to-z');
 const zToA = document.querySelector('.z-to-a');
-const limit = localStorage.getItem('filterLimit');
+const limit = localStorage.setItem('filterLimit', 151);
 const favTab = document.querySelector(".favs-tab");
 const favWrapper = document.querySelector('.fav-wrapper');
 const favNav = document.querySelector('.favorites-nav');
 const open = "open";
-
-if (limit === null) {
-  limit = localStorage.setItem('filterLimit', 151);
-}
 
 const checkFavorites = () => {
   const favoritesHeader = document.querySelector('.sub-header');
@@ -261,6 +257,5 @@ favNav.addEventListener('click', function() {
   toggleOpen(tab);
 });
 
-setTimeout(() => {
-  displayPokemon(limit);
-}, 200);
+
+displayPokemon(limit);
