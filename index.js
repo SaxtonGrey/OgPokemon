@@ -10,17 +10,21 @@ const fetchData = async () => {
   }
 };
 
-const pokemonList = document.querySelector('.pokemon-list');
+let pokemonList = document.querySelector('.pokemon-list');
 const favoritesList = document.querySelector('.favorites-list');
 const searchInput = document.querySelector('.search-input');
 const filterPageItems = document.querySelectorAll('.filter-page li button');
 const aToZ = document.querySelector('.a-to-z');
 const zToA = document.querySelector('.z-to-a');
-const limit = localStorage.setItem('filterLimit', 151);
+const limit = localStorage.getItem('filterLimit');
 const favTab = document.querySelector(".favs-tab");
 const favWrapper = document.querySelector('.fav-wrapper');
 const favNav = document.querySelector('.favorites-nav');
 const open = "open";
+
+if (limit === null) {
+  limit = localStorage.setItem('filterLimit', 151);
+}
 
 const checkFavorites = () => {
   const favoritesHeader = document.querySelector('.sub-header');
@@ -42,6 +46,7 @@ const createPokemonCard = (pokemon) => {
   pokemonCard.appendChild(pokemonImage);
   
   const pokemonName = document.createElement('h3');
+  pokemonName.classList.add('name');
   pokemonName.innerText = pokemon.name;
   pokemonCard.appendChild(pokemonName);
   
@@ -142,19 +147,6 @@ const displayPokemon = async (limit, sortBy = '') => {
     abilities: data.abilities.map((ability) => ability.ability.name).join(', '),
   }));
 
-  let pokeLimit = pokemonObjects.slice(0, limit);
-  
-  // Sort the Pokemon objects based on the sortBy parameter
-  pokemonObjects.sort((a, b) => a.number - b.number);
-
-  if (sortBy === 'asc') {
-    pokemonObjects.sort((a, b) => a.name.localeCompare(b.name));
-    pokeLimit.sort((a, b) => a.name.localeCompare(b.name));
-  } else if (sortBy === 'desc') {
-    pokemonObjects.sort((a, b) => b.name.localeCompare(a.name));
-    pokeLimit.sort((a, b) => b.name.localeCompare(a.name));
-  } 
-  
   // Add favorite Pokemon objects to favorites list
   pokemonObjects.forEach((object) => {
     if (localStorage.getItem('favorite-nums')?.split(',').includes(object.number.toString())) {
@@ -167,24 +159,27 @@ const displayPokemon = async (limit, sortBy = '') => {
     } 
   });
 
-  let count = 0;
-
-  pokemonObjects.forEach((object) => {
-    if (count >= limit) {
-      return; // stop the loop when the limit is reached
-    } else if (localStorage.getItem('favorite-nums')?.split(',').includes(object.number.toString())) {
-      return;
-    } else {
-      const pokemonCard = createPokemonCard(object);
-      pokemonList.appendChild(pokemonCard);
-      count++; // increment the counter after adding a card
-    }
+  // Add limited amount of Pokemon to PokemonList or sort displayed cards and favorites
+  const favoriteNums = localStorage.getItem('favorite-nums')?.split(',') || [];
+  const sortedPokemonObjects = pokemonObjects.filter((object) => !favoriteNums.includes(object.number.toString())).slice(0, limit);
+  let limitedSortedPokemonObjects = [];
+  if (sortBy === 'asc') {
+    limitedSortedPokemonObjects = sortedPokemonObjects.sort((a, b) => a.name.localeCompare(b.name));
+  } else if (sortBy === 'desc') {
+    limitedSortedPokemonObjects = sortedPokemonObjects.sort((a, b) => b.name.localeCompare(a.name));
+  } else {
+    limitedSortedPokemonObjects = sortedPokemonObjects;
+  }
+  limitedSortedPokemonObjects.forEach((object) => {
+    const pokemonCard = createPokemonCard(object);
+    pokemonList.appendChild(pokemonCard);
   });
-  
+
   setTimeout(() => {
     countTypes();
   }, 500);
 };
+
 
 // search for a Pokemon by name
 const searchPokemon = async () => {
@@ -266,4 +261,6 @@ favNav.addEventListener('click', function() {
   toggleOpen(tab);
 });
 
-displayPokemon(151);
+setTimeout(() => {
+  displayPokemon(limit);
+}, 200);
