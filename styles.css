@@ -203,6 +203,7 @@ h3 {
 
 .fav-toggle {
   background-color: rgba(29, 165, 255, 0.745);
+  color: black;
   padding:5px;
   border: 1px solid rgb(0, 38, 255);
   border-radius: 10px;
