@@ -45,20 +45,26 @@ const createPokemonCard = (pokemon) => {
   pokemonName.classList.add('name');
   pokemonName.innerText = pokemon.name;
   pokemonCard.appendChild(pokemonName);
+
+  const pokeInfo = document.createElement('div');
+  pokeInfo.classList.add('poke-info');
   
   const pokemonNumber = document.createElement('p');
   pokemonNumber.innerText = `#${pokemon.number}`;
-  pokemonCard.appendChild(pokemonNumber);
+  pokemonNumber.classList.add('number');
+  pokeInfo.appendChild(pokemonNumber);
   
   const pokemonType = document.createElement('p');
   pokemonType.innerText = `Type: ${pokemon.type}`;
   pokemonType.classList.add('card-type');
-  pokemonCard.appendChild(pokemonType);
+  pokeInfo.appendChild(pokemonType);
   
   const pokemonAbilities = document.createElement('p');
   pokemonAbilities.innerText = `Abilities: ${pokemon.abilities}`;
-  pokemonCard.appendChild(pokemonAbilities);
+  pokeInfo.appendChild(pokemonAbilities);
   
+  pokemonCard.appendChild(pokeInfo);
+
   const favToggle = document.createElement('button');
   favToggle.classList.add('fav-toggle');
   favToggle.innerText = localStorage.getItem('favorite-nums')?.split(',').includes(pokemon.number.toString()) ? 'Remove from Favorites' : 'Add to Favorites';
