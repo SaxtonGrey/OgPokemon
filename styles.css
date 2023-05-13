@@ -171,7 +171,8 @@ h3 {
   width: 100%;
   margin-bottom: 0.5rem;
   border: 5px solid rgb(230, 230, 230);
-  background-color: rgb(180, 180, 180);
+  background-image: url(./assets/DVMT-6OXcAE2rZY.jpg);
+  background-position: center;
 }
 
 .pokemon-card .name {
